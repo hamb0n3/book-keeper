@@ -77,7 +77,9 @@ body {
 
   &:hover,
   &:focus {
-    background-color: lighten($button-bg, 10%);
+    color: $text-color;
+    border: 3px double $text-color;
+    background-color: $bg-color;
   }
   
   &--add-book {
