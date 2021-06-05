@@ -1,4 +1,4 @@
-# book-keeper
+# Book Keeper
 
 All development code is in the /src directory.
 
