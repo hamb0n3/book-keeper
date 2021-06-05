@@ -54,23 +54,7 @@ export default {
   computed: {
     books() {
       return this.$store.state.books;
-    },
-    bookTitle: {
-      get() {
-        return this.$store.state.newBook.title;
-      },
-      set(book, value) {
-        this.$store.commit('EDIT_TITLE', book, value);
-      }
-    },
-    bookAuthor: {
-      get() {
-        return this.$store.state.newBook.author;
-      },
-      set(book, value) {
-        this.$store.commit('EDIT_AUTHOR', book, value);
-      }
-    },
+    }
   },
   methods: {
     toggleEdit(index) {

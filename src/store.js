@@ -13,6 +13,11 @@ export default new Vuex.Store({
       },
       {
         editing: false,
+        title: 'A Horse and His Boy',
+        author: 'C.S. Lewis'
+      },
+      {
+        editing: false,
         title: 'The Vampire Lestat',
         author: 'Anne Rice'
       }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Favorite Books</h1>
+    <h1>Book Keeper</h1>
     <p>You have <strong>{{ totalBooks }} books</strong> in your library</p>
     <button class="btn btn--add-book" @click.prevent="addBook"><i aria-hidden="true">&plus;</i>&nbsp;Add Book</button>
     <Books/>
@@ -54,14 +54,17 @@ body {
   max-width: 600px;
 }
 
-.full-width {
-  width: 100%;
+h1 {
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 1rem;
 }
 
 .btn {
   cursor: pointer;
   background-color: $button-bg;
-  border: 2px solid $button-bg;
+  border: 3px solid $button-bg;
+  border-radius: 5px;
   padding: 0.5rem 1rem;
   color: $bg-color;
   font-size: 0.75rem;
