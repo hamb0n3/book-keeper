@@ -1,4 +1,4 @@
-# favorite-books
+# book-keeper
 
 ## Project setup
 ```
