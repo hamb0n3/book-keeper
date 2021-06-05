@@ -1,5 +1,10 @@
 # book-keeper
 
+All development code is in the /src directory.
+
+##Project Demo
+[https://hamb0n3.github.io/book-keeper/](https://hamb0n3.github.io/book-keeper/)
+
 ## Project setup
 ```
 npm install
