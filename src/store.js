@@ -13,11 +13,6 @@ export default new Vuex.Store({
       },
       {
         editing: false,
-        title: 'There and Back Again',
-        author: 'Bilbo Baggins'
-      },
-      {
-        editing: false,
         title: 'The Vampire Lestat',
         author: 'Anne Rice'
       }
