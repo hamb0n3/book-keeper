@@ -20,6 +20,8 @@ git commit -m 'deploy'
 # git push -f git@github.com:hamb0n3/hamb0n3.github.io.git main
 
 # if you are deploying to https://hamb0n3.github.io/<REPO>
-git push -f git@github.com:hamb0n3/book-keeper.git main:gh-pages
+# git push -f git@github.com:hamb0n3/book-keeper.git main:gh-pages
+
+git subtree push --prefix dist origin gh-pages
 
 cd -
