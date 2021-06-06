@@ -53,8 +53,6 @@ export default new Vuex.Store({
       state.books[index].editing = !state.books[index].editing;
       if(state.books[index].editing) {
         focusTitleField(index);
-      } else {
-        focusBook(index);
       }
       state.searchTerms = '';
     },
@@ -104,7 +102,6 @@ export default new Vuex.Store({
               }
             })
           )
-          console.log(response.data.items);
           state.commit('UPDATE_LOAD_STATE', 'success');
         })
     }
