@@ -66,7 +66,7 @@ $link-color: #9aafb3;
   flex-wrap: wrap;
   list-style-type: none;
   width: 100%;
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   padding: 0;
   color: $text-color;
 

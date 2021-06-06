@@ -48,6 +48,7 @@ $text-color: #4f90a5;
 $button-bg: $medium-blue;
 
 body {
+  margin: 0;
   background-color: $bg-color;
 }
 
@@ -62,6 +63,7 @@ body {
   text-align: center;
   color: $text-color;
   margin: auto;
+  padding: 1rem 1rem 3rem;
   width: 100%;
   max-width: 600px;
 }
@@ -70,7 +72,7 @@ h1 {
   line-height: 1;
   font-size: 3rem;
   font-weight: 900;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   font-family: 'Playfair Display', serif;
 }
 
