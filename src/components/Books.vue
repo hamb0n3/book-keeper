@@ -58,6 +58,8 @@ export default {
 <style lang="scss">
 $border-color: #acdce7;
 $text-color: #4f90a5;
+$white: #fff;
+$link-color: #9aafb3;
 
 .books-list {
   display: flex;
@@ -72,7 +74,7 @@ $text-color: #4f90a5;
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #fff;
+    background-color: $white;
     border: 1px solid $border-color;
     border-radius: 5px;
     outline: none;
@@ -94,6 +96,8 @@ $text-color: #4f90a5;
   .book__title {
     font-size: 1.5rem;
     font-weight: 900;
+    max-width: 420px;
+    margin: auto;
   }
   .book__author {
     font-size: 1rem;
@@ -113,9 +117,8 @@ $text-color: #4f90a5;
       margin-left: 0.75rem;
 
       a {
-        color: #9aafb3;
+        color: $link-color;
         text-decoration: none;
-        transition: all 250ms ease;
         padding: 0.25rem;
         text-decoration: none;
         outline: none;

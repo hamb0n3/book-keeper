@@ -15,7 +15,7 @@ export default new Vuex.Store({
       {
         editing: false,
         title: 'The Hobbit',
-        author: 'J.R.R. Tolkien'
+        author: 'J.R.R. Tolkien',
       },
       {
         editing: false,
@@ -71,7 +71,8 @@ export default new Vuex.Store({
         state.books.unshift({
           editing: true,
           title: 'New Book',
-          author: 'New Author'
+          author: 'New Author',
+          ISBN: ''
         });
     },
     EDIT_BOOK_TITLE(state, payload) {
@@ -93,7 +94,17 @@ export default new Vuex.Store({
           `https://www.googleapis.com/books/v1/volumes?q=${terms}`
         )
         .then(response => {
-          state.commit('UPDATE_SEARCH_RESULTS', response.data.items)
+          state.commit('UPDATE_SEARCH_RESULTS', 
+            response.data.items.map(item => {
+              const book = item.volumeInfo;
+              return {
+                title: book.title,
+                author: typeof book.authors !== 'undefined' ? book.authors.join(', '): '', 
+                ISBN: typeof book.industryIdentifiers !== 'undefined' ? book.industryIdentifiers[0].identifier : ''
+              }
+            })
+          )
+          console.log(response.data.items);
           state.commit('UPDATE_LOAD_STATE', 'success');
         })
     }
