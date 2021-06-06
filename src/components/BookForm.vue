@@ -24,19 +24,26 @@
       <div class="book-form__field-wrapper">
         <label class="book-form__label" :for="`search_${index}`">
           <span class="book-form__label__text">Search</span>
-          <input type="search" v-model="searchTerms" @input="handleSearch" placeholder="Search for a book..." :title="`title_${index}`" :id="`title_${index}`"/>
+          <input type="search" v-model="searchTerms" @input="handleSearch" placeholder="Author, Title, or ISBN" :title="`title_${index}`" :id="`title_${index}`"/>
+          <a class="cancel-link" href="javascript:(void)" @click.prevent="cancelSearch(index)">cancel</a>
         </label>
       </div>
 
       <ul class="search-results" v-if="(searchTerms != '' && loadState == 'success')">
         <li class="search-results__result" v-for="(result, resultIndex) in searchResults" :key="resultIndex">
-          <button class="search-results__button" @click.prevent="handleResultSelection(result.volumeInfo, index)">
+          <div class="search-results__details">
             <span class="search-results__result__title">
-              {{ result.volumeInfo.title }}
-            </span><br>
-            <span v-if="(typeof result.volumeInfo.authors != 'undefined')" class="search-results__result__author">
-              {{ result.volumeInfo.authors.join(', ') }}
+              {{ result.title }}
             </span>
+            <span class="search-results__result__author">
+              {{ result.author }}
+            </span>
+            <span v-if="result.ISBN !== ''" class="search-results__result__isbn">
+              ISBN {{ result.ISBN }}
+            </span>
+          </div>
+          <button class="search-results__button btn" @click.prevent="handleResultSelection(result, index)">
+            Choose Book
           </button>
         </li>
       </ul>
@@ -72,6 +79,9 @@ export default {
     handleSearch(event) {
       this.$store.dispatch('SEARCH_BOOKS', this.searchTerms);
     },
+    cancelSearch(index) {
+      this.$store.commit('TOGGLE_EDIT', index);
+    },
     handleResultSelection(result, index) {
       this.$store.commit('EDIT_BOOK_TITLE', {
         index, 
@@ -79,7 +89,7 @@ export default {
       });
       this.$store.commit('EDIT_BOOK_AUTHOR', {
         index, 
-        value: result.authors.join(', ')
+        value: result.author
       });
       this.$store.commit('TOGGLE_EDIT', index);
     }
@@ -90,6 +100,7 @@ export default {
 <style lang="scss">
 $border-color: #acdce7;
 $text-color: #4f90a5;
+$pale-blue: #ebfaff;
 
 .book-form {
   width: 100%;
@@ -104,6 +115,23 @@ $text-color: #4f90a5;
 
     &__text {
       display: block;
+      text-align: left;
+      text-transform: uppercase;
+      font-size: 10px;
+      position: absolute;
+      top: 2px;
+      left: 4px;
+    }
+  }
+
+  .cancel-link {
+    text-align: right;
+    padding: 0.25rem;
+    color: #9aafb3;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
     }
   }
 
@@ -134,31 +162,50 @@ $text-color: #4f90a5;
     padding: 0;
     list-style-type: none;
 
-    &__button {
-      background-color: transparent;
-      width: 100%;
-      border: none;
-      border-bottom: 1px solid $border-color;
-      color: $text-color;
-      padding: 0.5rem;
-      font-size: 1rem;
-      text-align: left;
-      cursor: pointer;
-      transition: all 250ms ease;
-
-      &:hover,
-      &:focus {
-        background-color: $text-color;
-        color: #fff;
-      }
-    }
-
     &__result {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      border-bottom: 1px solid $border-color;
+      padding: 0.5rem;
+
+      &:hover {
+        background-color: $pale-blue;
+      }
+
+      &__title,
+      &__author,
+      &__isbn {
+        display: block;
+      }
       &__title {
         font-weight: bold;
       }
       &__author {
         font-size: 0.75rem;
+      }
+      &__isbn {
+        font-size: 0.7rem;
+      }
+    }
+
+    &__details {
+      width: 100%;
+      color: $text-color;
+      margin-right: 0.5rem;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    &__button {
+      width: 100%;
+      max-width: 105px;
+      font-size: 0.6rem;
+      padding: 0.25rem;
+
+      &:hover {
+        background-color: #fff;
       }
     }
   }

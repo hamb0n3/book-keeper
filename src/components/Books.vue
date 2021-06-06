@@ -94,6 +94,8 @@ $text-color: #4f90a5;
   .book__title {
     font-size: 1.5rem;
     font-weight: 900;
+    max-width: 420px;
+    margin: auto;
   }
   .book__author {
     font-size: 1rem;
@@ -115,7 +117,6 @@ $text-color: #4f90a5;
       a {
         color: #9aafb3;
         text-decoration: none;
-        transition: all 250ms ease;
         padding: 0.25rem;
         text-decoration: none;
         outline: none;
