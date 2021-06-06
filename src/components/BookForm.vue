@@ -24,9 +24,22 @@
       <div class="book-form__field-wrapper">
         <label class="book-form__label" :for="`search_${index}`">
           <span class="book-form__label__text">Search</span>
-          <input type="text" v-model="searchTerm" :title="`title_${index}`" :id="`title_${index}`"/>
+          <input type="search" v-model="searchTerms" @input="handleSearch" placeholder="Search for a book..." :title="`title_${index}`" :id="`title_${index}`"/>
         </label>
       </div>
+
+      <ul class="search-results" v-if="(searchTerms != '' && loadState == 'success')">
+        <li class="search-results__result" v-for="(result, resultIndex) in searchResults" :key="resultIndex">
+          <button class="search-results__button" @click.prevent="handleResultSelection(result.volumeInfo, index)">
+            <span class="search-results__result__title">
+              {{ result.volumeInfo.title }}
+            </span><br>
+            <span v-if="(typeof result.volumeInfo.authors != 'undefined')" class="search-results__result__author">
+              {{ result.volumeInfo.authors.join(', ') }}
+            </span>
+          </button>
+        </li>
+      </ul>
     </div>
   </form>
 </template>
@@ -37,21 +50,37 @@ export default {
   name: 'BookForm',
   props: ['book', 'index'],
   computed: {
-    searchTerm: {
+    searchTerms: {
       get() {
-        return this.$store.getters.searchTerm;
+        return this.$store.state.searchTerms;
       },
       set(value) {
-        this.$store.commit('EDIT_SEARCHTERM', value);
+        this.$store.commit('UPDATE_SEARCH_TERMS', value);
       }
     },
     ...mapGetters([
-    'books', 
-    'addMethod'
-  ])
+      'books', 
+      'addMethod',
+      'searchResults',
+      'loadState'
+    ])
   },
   methods: {
     handleSubmit(index) {
+      this.$store.commit('TOGGLE_EDIT', index);
+    },
+    handleSearch(event) {
+      this.$store.dispatch('SEARCH_BOOKS', this.searchTerms);
+    },
+    handleResultSelection(result, index) {
+      this.$store.commit('EDIT_BOOK_TITLE', {
+        index, 
+        value: result.title
+      });
+      this.$store.commit('EDIT_BOOK_AUTHOR', {
+        index, 
+        value: result.authors.join(', ')
+      });
       this.$store.commit('TOGGLE_EDIT', index);
     }
   }
@@ -78,7 +107,15 @@ $text-color: #4f90a5;
     }
   }
 
+  input[type="search"] {
+    margin: 0 auto;
+  }
   input[type="text"] {
+    margin: 0 auto 1rem;
+  }
+
+  input[type="text"],
+  input[type="search"] {
     height: 44px;
     width: 100%;
     color: $text-color;
@@ -86,11 +123,43 @@ $text-color: #4f90a5;
     text-align: center;
     padding: 0.25rem 0.5rem;
     border: 1px solid $border-color;
-    margin: 0 auto 1rem;
 
     &:focus {
       border: 3px double $border-color;
       outline: none;
+    }
+  }
+
+  .search-results {
+    padding: 0;
+    list-style-type: none;
+
+    &__button {
+      background-color: transparent;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid $border-color;
+      color: $text-color;
+      padding: 0.5rem;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 250ms ease;
+
+      &:hover,
+      &:focus {
+        background-color: $text-color;
+        color: #fff;
+      }
+    }
+
+    &__result {
+      &__title {
+        font-weight: bold;
+      }
+      &__author {
+        font-size: 0.75rem;
+      }
     }
   }
 }

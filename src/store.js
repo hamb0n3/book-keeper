@@ -8,7 +8,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     addMethod: '', // 'manual' or 'search'
-    searchTerm: 'search for a book...',
+    searchTerms: '',
+    searchResults: [],
+    loadState: '',
     books: [
       {
         editing: false,
@@ -17,7 +19,7 @@ export default new Vuex.Store({
       },
       {
         editing: false,
-        title: 'A Horse and His Boy',
+        title: 'The Horse and His Boy',
         author: 'C.S. Lewis'
       },
       {
@@ -54,9 +56,16 @@ export default new Vuex.Store({
       } else {
         focusBook(index);
       }
+      state.searchTerms = '';
     },
-    EDIT_SEARCHTERM(state, value) {
-      state.searchTerm = value;
+    UPDATE_SEARCH_TERMS(state, value) {
+      state.searchTerms = value;
+    },
+    UPDATE_SEARCH_RESULTS(state, payload) {
+      state.searchResults = payload;
+    },
+    UPDATE_LOAD_STATE(state, value) {
+      state.loadState = value;
     },
     ADD_BOOK(state) {
         state.books.unshift({
@@ -65,36 +74,48 @@ export default new Vuex.Store({
           author: 'New Author'
         });
     },
+    EDIT_BOOK_TITLE(state, payload) {
+      state.books[payload.index].title = payload.value;
+    },
+    EDIT_BOOK_AUTHOR(state, payload) {
+      state.books[payload.index].author = payload.value;
+    },
     DELETE_BOOK(state, book) {
       state.books.splice(book, 1);
-      focusBook(book)
+      focusBook(book);
     }
   },
   actions: {
-    SEARCH_BOOKS(state) {
-        axios
-          .get(
-            `https://www.googleapis.com/books/v1/volumes?q=${state.searchTerm}`
-          )
-          .then(response => {
-            console.log(response.data.items)
-            this.books = response.data.items
-            this.loadState = 'success'
-          })
+    SEARCH_BOOKS(state, terms) {
+      state.commit('UPDATE_LOAD_STATE', 'loading')
+      axios
+        .get(
+          `https://www.googleapis.com/books/v1/volumes?q=${terms}`
+        )
+        .then(response => {
+          state.commit('UPDATE_SEARCH_RESULTS', response.data.items)
+          state.commit('UPDATE_LOAD_STATE', 'success');
+        })
     }
   },
   getters: {
     books(state) {
       return state.books;
     },
-    searchTerm(state) {
-      return state.searchTerm;
-    },
     totalBooks(state) {
       return state.books.length;
     },
     addMethod(state) {
       return state.addMethod;
+    },
+    searchTerms(state) {
+      return state.searchTerms;
+    },
+    searchResults(state) {
+      return state.searchResults;
+    },
+    loadState(state) {
+      return state.loadState;
     }
   }
 })
