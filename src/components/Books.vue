@@ -4,36 +4,16 @@
       <div class="books-list__book__details">
         <span class="book__title">{{book.title}}</span>
         <span class="book__author">by {{book.author}}</span>
-        
-        <form v-if="book.editing" class="book-form" id="editBook" @submit.prevent="toggleEdit(index)">
-          <div class="book-form__field-wrapper">
-            <label class="book-form__label" :for="`title_${index}`">
-              <span class="book-form__label__text">Title</span>
-              <input type="text" v-model="book.title" :title="`title_${index}`" :id="`title_${index}`"/>
-            </label>
-          </div>
 
-          <div class="book-form__field-wrapper">
-            <label class="book-form__label" :for="`author_${index}`">
-              <span class="book-form__label__text">Author</span>
-              <input type="text" v-model="book.author" :title="`author_${index}`" :id="`author_${index}`"/>
-            </label>
-          </div>
-
-          <div class="book-form__field-wrapper">
-            <button class="btn" type="submit">Done Editing</button>
-          </div>
-        </form>
+        <BookForm :book="book" :index="index" />
       </div>
       <ul class="book-options">
         <li class="book-options__option">
-          <a href="javascript:(void)" @click.prevent="toggleEdit(index)" :title="`Edit ${book.title}`">
-            <span v-if="!book.editing">edit</span>
-            <span v-else>editing...</span>
-          </a>
+          <a v-if="!book.editing || addMethod == 'search'" href="javascript:(void)" @click.prevent="showManualForm(index)" :title="`Edit book`">edit</a>
+          <a v-if="book.editing && addMethod == 'manual'" href="javascript:(void)" @click.prevent="showSearchForm(index)" :title="`Search for book`">search</a>
         </li>
         <li class="book-options__option">
-          <a href="javascript:(void)" @click.prevent="deleteBook(index)" :title="`Remove ${book.title}`">delete</a>
+          <a href="javascript:(void)" @click.prevent="deleteBook(index)" :title="`Remove book`">remove</a>
         </li>
       </ul>
     </li>
@@ -48,26 +28,25 @@
 </template>
 
 <script>
-import { focusTitleField } from '../helpers.js';
+import { mapState } from 'vuex';
+import BookForm from './BookForm';
+
 export default {
   name: 'Books',
-  computed: {
-    books() {
-      return this.$store.state.books;
-    }
+  components: {
+    BookForm
   },
+  computed: mapState(['books', 'addMethod']),
   methods: {
-    toggleEdit(index) {
+    showManualForm(index) {
+      this.$store.commit('CLOSE_EDIT_FORMS');
+      this.$store.commit('SET_ADD_METHOD', 'manual');
       this.$store.commit('TOGGLE_EDIT', index);
-      if(this.books[index].editing) {
-        focusTitleField(index);
-      } else {
-        this.focusBook(index);
-      }
     },
-    focusBook(index) {
-      const $book = document.getElementById(`book_${index}`);
-      $book.focus();
+    showSearchForm(index) {
+      this.$store.commit('CLOSE_EDIT_FORMS');
+      this.$store.commit('SET_ADD_METHOD', 'search');
+      this.$store.commit('TOGGLE_EDIT', index);
     },
     deleteBook(index) {
       this.$store.commit('DELETE_BOOK', index);
@@ -76,7 +55,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 $border-color: #acdce7;
 $text-color: #4f90a5;
 
@@ -138,7 +117,7 @@ $text-color: #4f90a5;
         text-decoration: none;
         transition: all 250ms ease;
         padding: 0.25rem;
-        border: 1px solid transparent;
+        text-decoration: none;
         outline: none;
 
         &:visited {
@@ -146,42 +125,9 @@ $text-color: #4f90a5;
         }
         &:hover,
         &:focus {
-          border: 1px dashed currentColor;
+          text-decoration: underline;
         }
       }
-    }
-  }
-}
-
-.book-form {
-  width: 100%;
-  max-width: 400px;
-  margin: 1rem auto 0;
-  padding: 1rem;
-  border-top: 1px solid $border-color;
-
-  &__label {
-    position: relative;
-    display: block;
-
-    &__text {
-      display: block;
-    }
-  }
-
-  input[type="text"] {
-    height: 44px;
-    width: 100%;
-    color: $text-color;
-    font-size: 1rem;
-    text-align: center;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid $border-color;
-    margin: 0 auto 1rem;
-
-    &:focus {
-      border: 3px double $border-color;
-      outline: none;
     }
   }
 }

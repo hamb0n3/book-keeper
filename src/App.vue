@@ -2,7 +2,18 @@
   <div id="app">
     <h1>Book Keeper</h1>
     <p>You have <strong>{{ totalBooks }} books</strong> in your library</p>
-    <button class="btn btn--add-book" @click.prevent="addBook"><i aria-hidden="true">&plus;</i>&nbsp;Add Book</button>
+    <fieldset class="add-options">
+      <legend>
+        <i aria-hidden="true">&plus;</i>&nbsp;ADD BOOK
+      </legend>
+      <button class="btn btn--add-option" @click.prevent="addBook('manual')">
+        Manual Entry
+      </button>
+      <span>OR</span>
+      <button class="btn btn--add-option" @click.prevent="addBook('search')">
+        Search
+      </button>
+    </fieldset>
     <Books/>
   </div>
 </template>
@@ -18,7 +29,9 @@ export default {
   },
   computed: mapGetters(['totalBooks']),
   methods: {
-    addBook() {
+    addBook(method) {
+      this.$store.commit('CLOSE_EDIT_FORMS');
+      this.$store.commit('SET_ADD_METHOD', method);
       this.$store.commit('ADD_BOOK');
       focusTitleField(0);
     }
@@ -60,6 +73,28 @@ h1 {
   margin-bottom: 1rem;
 }
 
+i {
+  font-style: normal;
+}
+
+.add-options {
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  padding: 0.5rem 1rem 1rem;
+  margin-top: 1rem;
+
+  > legend {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 0 0.75rem;
+    text-align: left;
+  }
+
+  > span {
+    margin: 0 1rem;
+  }
+}
+
 .btn {
   cursor: pointer;
   background-color: $button-bg;
@@ -87,6 +122,10 @@ h1 {
   
   &--add-book {
     font-size: 1rem;
+  }
+  &--add-option {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
   }
 }
 </style>

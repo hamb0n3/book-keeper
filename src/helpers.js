@@ -5,3 +5,8 @@ export const focusTitleField = (titleIndex) => {
     $title.select();
   }, 0)
 }
+
+export const focusBook = (index) => {
+  const $book = document.getElementById(`book_${index}`);
+  $book.focus();
+}
