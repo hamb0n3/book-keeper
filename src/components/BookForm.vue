@@ -76,7 +76,7 @@ export default {
     handleSubmit(index) {
       this.$store.commit('TOGGLE_EDIT', index);
     },
-    handleSearch(event) {
+    handleSearch() {
       this.$store.dispatch('SEARCH_BOOKS', this.searchTerms);
     },
     cancelSearch(index) {
