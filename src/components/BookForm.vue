@@ -136,6 +136,10 @@ $link-color: #9aafb3;
       text-decoration: none;
     }
   }
+  input,
+  button {
+    -webkit-appearance: none;
+  }
 
   input[type="search"] {
     margin: 0 auto;

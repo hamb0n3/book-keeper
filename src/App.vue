@@ -103,7 +103,7 @@ i {
   background-color: $button-bg;
   border: 3px solid $button-bg;
   border-radius: 5px;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem;
   color: $bg-color;
   font-size: 0.75rem;
   font-weight: bold;
