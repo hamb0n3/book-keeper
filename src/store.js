@@ -68,8 +68,8 @@ export default new Vuex.Store({
     ADD_BOOK(state) {
         state.books.unshift({
           editing: true,
-          title: 'New Book',
-          author: 'New Author',
+          title: 'Untitled Book',
+          author: 'Unknown Author',
           ISBN: ''
         });
     },
