@@ -42,11 +42,9 @@ export default {
 <style lang="scss">;
 $medium-blue: #4f90a5;
 $pale-blue: #ebfaff;
-
 $bg-color: $pale-blue;
 $text-color: #4f90a5;
 $button-bg: $medium-blue;
-
 
 body {
   background-color: $bg-color;

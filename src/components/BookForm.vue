@@ -101,6 +101,8 @@ export default {
 $border-color: #acdce7;
 $text-color: #4f90a5;
 $pale-blue: #ebfaff;
+$white: #fff;
+$link-color: #9aafb3;
 
 .book-form {
   width: 100%;
@@ -127,7 +129,7 @@ $pale-blue: #ebfaff;
   .cancel-link {
     text-align: right;
     padding: 0.25rem;
-    color: #9aafb3;
+    color: $link-color;
 
     &:hover,
     &:focus {
@@ -166,7 +168,7 @@ $pale-blue: #ebfaff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #fff;
+      background-color: $white;
       border-bottom: 1px solid $border-color;
       padding: 0.5rem;
 
@@ -205,7 +207,7 @@ $pale-blue: #ebfaff;
       padding: 0.25rem;
 
       &:hover {
-        background-color: #fff;
+        background-color: $white;
       }
     }
   }
