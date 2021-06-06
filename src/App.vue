@@ -40,6 +40,7 @@ export default {
 </script>
 
 <style lang="scss">;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 $medium-blue: #4f90a5;
 $pale-blue: #ebfaff;
 $bg-color: $pale-blue;
@@ -67,8 +68,10 @@ body {
 
 h1 {
   line-height: 1;
+  font-size: 3rem;
   font-weight: 900;
   margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
 }
 
 i {
@@ -82,7 +85,7 @@ i {
   margin-top: 1rem;
 
   > legend {
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: bold;
     padding: 0 0.75rem;
     text-align: left;

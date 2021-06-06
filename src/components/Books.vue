@@ -3,7 +3,7 @@
     <li :id="`book_${index}`" class="books-list__book" v-for="(book, index) in books" :key="`book-${index}`" tabindex="-1">
       <div class="books-list__book__details">
         <span class="book__title">{{book.title}}</span>
-        <span class="book__author">by {{book.author}}</span>
+        <span class="book__author">{{book.author}}</span>
 
         <BookForm :book="book" :index="index" />
       </div>
@@ -94,6 +94,7 @@ $link-color: #9aafb3;
   }
 
   .book__title {
+    font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     font-weight: 900;
     max-width: 420px;
@@ -101,7 +102,6 @@ $link-color: #9aafb3;
   }
   .book__author {
     font-size: 1rem;
-    font-style: italic;
   }
 
   .book-options {
