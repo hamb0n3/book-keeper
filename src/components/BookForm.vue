@@ -29,7 +29,7 @@
         </label>
       </div>
 
-      <ul class="search-results" v-if="(searchTerms != '' && loadState == 'success')">
+      <ul class="search-results" v-if="(searchTerms !== '' && loadState === 'success')">
         <li class="search-results__result" v-for="(result, resultIndex) in searchResults" :key="resultIndex">
           <div class="search-results__details">
             <span class="search-results__result__title">

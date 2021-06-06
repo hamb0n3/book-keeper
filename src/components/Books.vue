@@ -9,8 +9,8 @@
       </div>
       <ul class="book-options">
         <li class="book-options__option">
-          <a v-if="!book.editing || addMethod == 'search'" href="javascript:(void)" @click.prevent="showForm(index, 'manual')" :title="`Edit book`">edit</a>
-          <a v-if="book.editing && addMethod == 'manual'" href="javascript:(void)" @click.prevent="showForm(index, 'search')" :title="`Search for book`">search</a>
+          <a v-if="!book.editing || addMethod === 'search'" href="javascript:(void)" @click.prevent="showForm(index, 'manual')" :title="`Edit book`">edit</a>
+          <a v-if="book.editing && addMethod === 'manual'" href="javascript:(void)" @click.prevent="showForm(index, 'search')" :title="`Search for book`">search</a>
         </li>
         <li class="book-options__option">
           <a href="javascript:(void)" @click.prevent="deleteBook(index)" :title="`Remove book`">remove</a>
