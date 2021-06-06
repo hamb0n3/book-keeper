@@ -88,7 +88,7 @@ i {
 
   > legend {
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 900;
     padding: 0 0.75rem;
     text-align: left;
   }
